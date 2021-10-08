@@ -88,13 +88,12 @@ module.exports = configure((ctx) => ({
         primary: '#0ADC2E',
         secondary: '#777777',
         dark: '#343434',
-
         accent: '#9C27B0',
         positive: '#21BA45',
         negative: '#C10015',
         info: '#31CCEC',
-        warning: '#F2C037'
-      }
+        warning: '#F2C037',
+      },
     },
 
     // iconSet: 'material-icons', // Quasar icon set

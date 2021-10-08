@@ -1,20 +1,39 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+  <q-layout view="lHh Lpr lFf" class="bg-dark" >
+    <q-header elevated  >
+      <q-toolbar
+      class="row items-center"
+      :class="{'justify-between':$q.screen.lt.md, 'justify-center':$q.screen.gt.sm,}">
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <img
+            src="../assets/quasar-logo-vertical.svg"
+            alt="Logo o Gira"
+            width="100"
+            height="80" >
         <q-btn
           flat
           dense
           round
           icon="menu"
           aria-label="Menu"
+          class="lt-md inline"
           @click="toggleRightDrawer"
+        />
+        <NavBar
+          v-for="link in linksList"
+          :key="link.title"
+          v-bind="link"
+          :path="link.path"
+          class="gt-sm inline"
+        />
+
+        <q-separator color="gray" class="q-mx-lg gt-sm inline" inset vertical />
+
+        <q-btn
+          color="primary"
+          text-color="white"
+          class="gt-sm inline"
+          label="Baixar carteira"
         />
       </q-toolbar>
     </q-header>
@@ -24,20 +43,47 @@
       v-model="rightDrawerOpen"
       show-if-above
       bordered
+      class="full-width bg-dark lt-md inline"
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+        <q-item-label header>
+          <div class="row items-center justify-between">
+            <img
+            src="../assets/quasar-logo-vertical.svg"
+            alt="Logo o Gira"
+            width="100"
+            height="80" >
+
+            <q-btn
+              flat
+              dense
+              round
+              icon="menu"
+              color="primary"
+              aria-label="Menu"
+              class="lt-sm inline"
+              @click="toggleRightDrawer"
+            />
+          </div>
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
+        <NavBar
+          v-for="link in linksList"
           :key="link.title"
           v-bind="link"
+          :path="link.path"
+          :isMobile="true"
         />
+        <q-separator color="gray" inset />
       </q-list>
+      <div class="row q-ma-md items-center justify-between">
+        <q-btn
+          color="primary"
+          text-color="white"
+          class="q-mt-lg"
+          label="Baixar carteira"
+        />
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -47,67 +93,44 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue';
+import NavBar from 'src/components/NavBar.vue';
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Home',
+    link: '/',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
+    title: 'O Gira',
+    link: '/o-gira',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
+    title: 'Nosso modelo',
+    link: '/nosso-modelo',
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Perguntas frequentes',
+    link: '/perguntas-frequentes',
   },
 ];
 
 import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink,
+    NavBar,
   },
 
   setup() {
     const rightDrawerOpen = ref(false);
+    const $q = useQuasar();
 
     return {
-      essentialLinks: linksList,
+      $q,
+      linksList,
       rightDrawerOpen,
       toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value;
@@ -116,3 +139,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.q-drawer {
+  width: 100% !important;
+}
+</style>
