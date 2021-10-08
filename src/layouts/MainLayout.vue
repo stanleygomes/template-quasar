@@ -2,25 +2,26 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
 
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleRightDrawer"
+        />
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      side="right"
+      v-model="rightDrawerOpen"
       show-if-above
       bordered
     >
@@ -103,13 +104,13 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(false);
 
     return {
       essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+      rightDrawerOpen,
+      toggleRightDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value;
       },
     };
   },
